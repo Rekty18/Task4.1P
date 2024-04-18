@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Task Manager App</string>
+    <!-- Add these lines for your activity labels and hints -->
+    <string name="task_title">Task Title</string>
+    <string name="task_description">Task Description</string>
+    <string name="task_due_date">Due Date</string>
+    <string name="save">Save</string>
+</resources>
