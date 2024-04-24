@@ -9,7 +9,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import com.example.taskmanagerapp.TaskDatabase;
 
-
 public class TaskRepository {
     private TaskDao taskDao;
     private LiveData<List<Task>> allTasks;
@@ -28,5 +27,23 @@ public class TaskRepository {
         TaskDatabase.databaseWriteExecutor.execute(() -> {
             taskDao.insert(task);
         });
+    }
+
+    // Method to update a task
+    public void update(Task task) {
+        TaskDatabase.databaseWriteExecutor.execute(() -> {
+            taskDao.update(task);
+        });
+    }
+
+    // Method to delete a task by ID
+    public void delete(int taskId) {
+        TaskDatabase.databaseWriteExecutor.execute(() -> {
+            taskDao.delete(taskId);
+        });
+    }
+
+    public LiveData<Task> getTaskById(int taskId) {
+        return taskDao.getTaskById(taskId);
     }
 }

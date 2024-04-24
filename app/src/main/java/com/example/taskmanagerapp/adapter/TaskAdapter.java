@@ -10,17 +10,18 @@ import java.util.List;
 import com.example.taskmanagerapp.R;
 import java.util.ArrayList;
 
-
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
     private List<Task> tasks;
+    private OnTaskListener onTaskListener;
 
-
-    public TaskAdapter() {
-        this.tasks = new ArrayList<>();
+    public interface OnTaskListener {
+        void onTaskClick(int position);
+        void onTaskLongClick(int position);
     }
 
-    public TaskAdapter(List<Task> tasks) {
+    public TaskAdapter(List<Task> tasks, OnTaskListener onTaskListener) {
         this.tasks = tasks;
+        this.onTaskListener = onTaskListener;
     }
 
 
@@ -35,6 +36,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         Task currentTask = tasks.get(position);
         holder.textViewTitle.setText(currentTask.getTitle());
         holder.textViewDueDate.setText(currentTask.getDueDate());
+
+        holder.itemView.setOnClickListener(v -> onTaskListener.onTaskClick(position));
+        holder.itemView.setOnLongClickListener(v -> {
+            onTaskListener.onTaskLongClick(position);
+            return true;
+        });
     }
 
     @Override
@@ -56,5 +63,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
         notifyDataSetChanged();
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
     }
 }
